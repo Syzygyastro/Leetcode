@@ -1,38 +1,16 @@
-#### This program scrapes naukri.com's page and gives our result as a 
-#### list of all the job_profiles which are currently present there. 
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
-import requests 
-from bs4 import BeautifulSoup 
-from selenium import webdriver 
-from selenium.webdriver.common.keys import Keys 
-import time 
+def browser_function():
+    chr_options = Options()
+    chr_options.add_experimental_option("detach", True)
+    path  = "C:\\Users\\kkapo\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe"
+    # Use ChromeDriverManager to automatically download and manage the correct ChromeDriver version
+    chr_driver = webdriver.Chrome(path)
+    url = "https://www.youtube.com/@NeetCodeIO/videos"
+    chr_driver.get(url=url)
+    time.sleep(50000)
 
-#url of the page we want to scrape 
-url = "https://www.naukri.com/top-jobs-by-designations#"
-
-# initiating the webdriver. Parameter includes the path of the webdriver. 
-driver = webdriver.Chrome("C:\\Users\\kkapo\\Downloads\\chromedriver") 
-driver.get(url) 
-
-# this is just to ensure that the page is loaded 
-time.sleep(5) 
-
-html = driver.page_source 
-
-# this renders the JS code and stores all 
-# of the information in static HTML code. 
-
-# Now, we could simply apply bs4 to html variable 
-soup = BeautifulSoup(html, "html.parser") 
-all_divs = soup.find('div', {'id' : 'nameSearch'}) 
-job_profiles = all_divs.find_all('a') 
-
-# printing top ten job profiles 
-count = 0
-for job_profile in job_profiles : 
-	print(job_profile.text) 
-	count = count + 1
-	if(count == 10) : 
-		break
-
-driver.close() # closing the webdriver 
+browser_function()
